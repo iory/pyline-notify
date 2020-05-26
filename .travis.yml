@@ -1,0 +1,31 @@
+language: python
+
+cache:
+  - pip
+
+python:
+  - '3.7'
+  - '2.7'
+
+addons:
+  apt:
+    update: true
+
+install:
+  - pip install --upgrade pip setuptools wheel
+  - pip install .
+
+script:
+  - pip install hacking pytest
+  - flake8 .
+  - pytest -v tests
+
+sudo: false
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    secure: HCmFwS4othla/v+EmRObuFBJdIpPIhvt33cj3O/hl0TsLYEsX/mgubyHld6r7AkqwfeNwFBtJuiR1eKT8z3FK/iPHyS/7jcH5JQ48lluuaVTnv1IZtXoh511J05L8SQpF8CElQwCvQSKL1t5lJb2ml10J3IAIu9Z0VKSLfEVT/aO+qtb3SIXjSxUVxw0EsqIuhS/mGb9mj9IeT7QNkCfGLLBMT1ZJw6iKKfnXUd7VknU5HC1FqC3V1piWzC5HD2Grosg4TCcSSHVrh9TaPEb4gVxPYaEEpk35NsTUMAYekvAE7FPzkzAJZh6x3c4FdUfoW310aGuESo3vm0XZND+ZtiMWZ4iZNSzkDmIxq41iOsLcER/HdrGfW5BVGh5dVC3oqVs8B8kbVs461xXOcJNxoGA7jwmQgTTvpYq084hzVIr9v/ANVmJqrU3mQBzbz7nTEHA3UMt215koDSezYUGiGroi503KUPGHkkHwXBTcT0zaxop6Jc/lr27lGNd0i1CbdhHAcHp/1NfugIsylY3+x5FwLbUDjrrFs16/PxLENLBIOZnosQgyBGLo2NtifmUTdF411TaAyvvvT4kksfnjOo3gYSj2ZLGumyLA3UdUiAVO+bp7Q7fKdaDY2mbhelA1j5QoBF/TO1fNfbZJcgLZtbjtQdZuLaTfa4K6t9Djw8=
