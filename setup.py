@@ -33,7 +33,9 @@ if sys.argv[-1] == "release":
 
 setup_requires = []
 install_requires = [
+    'numpy',
     'pillow',
+    'requests',
 ]
 
 

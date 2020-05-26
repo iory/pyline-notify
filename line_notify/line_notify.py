@@ -1,10 +1,10 @@
 import datetime
 import io
 import os
-import requests
 
 import numpy as np
 from PIL import Image
+import requests
 
 
 class LineNotify(object):
