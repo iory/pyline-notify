@@ -32,7 +32,9 @@ if sys.argv[-1] == "release":
 
 
 setup_requires = []
-install_requires = []
+install_requires = [
+    'pillow',
+]
 
 
 setup(
