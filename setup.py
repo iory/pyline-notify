@@ -23,7 +23,7 @@ if sys.argv[-1] == "release":
         "git tag v{:s}".format(version),
         "git push origin master --tag",
         "python setup.py sdist",
-        "twine upload dist/line-notify-{:s}.tar.gz".format(version),
+        "twine upload dist/pyline-notify-{:s}.tar.gz".format(version),
     ]
     for cmd in commands:
         print("+ {}".format(cmd))
@@ -40,12 +40,12 @@ install_requires = [
 
 
 setup(
-    name="line-notify",
+    name="pyline-notify",
     version=version,
     description="A python library for manipulating line notify api",
     author="iory",
     author_email="ab.ioryz@gmail.com",
-    url="https://github.com/iory/line-notify",
+    url="https://github.com/iory/pyline-notify",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     license="MIT",

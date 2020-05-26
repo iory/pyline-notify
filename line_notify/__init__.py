@@ -3,7 +3,7 @@
 import pkg_resources
 
 
-__version__ = pkg_resources.get_distribution("line-notify").version
+__version__ = pkg_resources.get_distribution("pyline-notify").version
 
 
 from .line_notify import LineNotify

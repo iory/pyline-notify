@@ -1,11 +1,11 @@
-# line-notify
+# pyline-notify
 
 A python library for manipulating line notify api
 
 ## Install
 
 ```
-pip install line-notify
+pip install pyline-notify
 ```
 
 ## QuickStart
