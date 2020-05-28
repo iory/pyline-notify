@@ -6,18 +6,23 @@ import numpy as np
 from PIL import Image
 import requests
 
+_cached_token = {}
+
 
 class LineNotify(object):
 
     def __init__(self, token=None):
         if token is None:
             token = os.getenv('LINENOTIFY_TOKEN')
+        if token not in _cached_token:
+            self.headers = {'Authorization': 'Bearer ' + token}
+            if token is None \
+               or len(token) == 0 \
+               or self.status().status_code != 200:
+                raise RuntimeError('Correct line notify token is not set.')
+        _cached_token[token] = True
         self.token = token
-        self.headers = {'Authorization': 'Bearer ' + self.token}
-        if token is None \
-           or len(token) == 0 \
-           or self.status().status_code != 200:
-            raise RuntimeError('Correct line notify token is not set.')
+        self.headers = {'Authorization': 'Bearer ' + token}
 
     def status(self):
         line_notify_api = 'https://notify-api.line.me/api/status'
