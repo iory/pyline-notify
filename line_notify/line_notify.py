@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import datetime
 import io
 import os
@@ -7,7 +9,12 @@ import numpy as np
 from PIL import Image
 import requests
 
+from line_notify.image_utils import resize_keeping_aspect_ratio
+
 _cached_token = {}
+
+
+imageFullsize = 1024
 
 
 class LineNotify(object):
@@ -95,6 +102,8 @@ class LineNotify(object):
             files = []
             for pil_img in pil_imgs:
                 buf = io.BytesIO()
+                pil_img = resize_keeping_aspect_ratio(
+                    pil_img, imageFullsize)
                 pil_img.save(buf, format='png')
                 buf.seek(0)
                 files.append({"imageFile": buf})
