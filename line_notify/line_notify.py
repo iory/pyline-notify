@@ -1,6 +1,7 @@
 import datetime
 import io
 import os
+import pathlib
 
 import numpy as np
 from PIL import Image
@@ -72,6 +73,12 @@ class LineNotify(object):
                     else:
                         raise OSError('Image path of {} is not exist'
                                       .format(img))
+                elif isinstance(img, pathlib.PosixPath):
+                    if img.exists():
+                        pil_img = Image.open(str(img))
+                    else:
+                        raise OSError('Image path of {} is not exist'
+                                      .format(str(img)))
                 else:
                     raise ValueError
                 pil_imgs.append(pil_img)
@@ -110,7 +117,7 @@ def send_line_notify(message=None, imgs=None, token=None):
         text message.
     imgs : None, list[PIL.Image.Image], list[numpy.ndarray] or list[str]
         Images or paths of image file.
-    token : None or str
+    token : None or str or pathlib.PosixPath
         access token. If this value is None, get access token from
         environment variable LINENOTIFY_TOKEN.
 
