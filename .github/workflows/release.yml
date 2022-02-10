@@ -47,7 +47,7 @@ jobs:
     - name: Install this repository
       run: pip install .
     - name: Run Pytest
-      run: pytest -v tests
+      run: LINENOTIFY_TOKEN=${{ secrets.TOKEN }} pytest -v tests
 
   pypi:
     name: Release To PyPi
