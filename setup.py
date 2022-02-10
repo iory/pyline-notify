@@ -1,6 +1,5 @@
 from __future__ import print_function
 
-import distutils.spawn
 import shlex
 import subprocess
 import sys
@@ -9,35 +8,28 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = "0.0.4"
+version = "0.0.6"
 
 
 if sys.argv[-1] == "release":
-    if not distutils.spawn.find_executable("twine"):
-        print(
-            "Please install twine:\n\n\tpip install twine\n", file=sys.stderr,
-        )
-        sys.exit(1)
-
+    # Release via github-actions.
     commands = [
-        "git tag v{:s}".format(version),
-        "git push origin master --tag",
-        "python setup.py sdist",
-        "twine upload dist/pyline-notify-{:s}.tar.gz".format(version),
+        'git tag v{:s}'.format(version),
+        'git push origin master --tag',
     ]
     for cmd in commands:
-        print("+ {}".format(cmd))
+        print('+ {}'.format(cmd))
         subprocess.check_call(shlex.split(cmd))
     sys.exit(0)
 
 
 setup_requires = []
-install_requires = [
-    'numpy',
-    'pillow',
-    'requests',
-]
 
+with open('requirements.txt') as f:
+    install_requires = []
+    for line in f:
+        req = line.split('#')[0].strip()
+        install_requires.append(req)
 
 if (sys.version_info.major, sys.version_info.minor) < (3, 0):
     install_requires.append('pathlib')

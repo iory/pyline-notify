@@ -1,0 +1,4 @@
+numpy
+pathlib;python_version<"3.0"
+pillow
+requests

@@ -21,15 +21,19 @@ class TestLineNotify(unittest.TestCase):
             LineNotify(token='')
 
     def test_notify(self):
-        # do nothing
-        self.client.notify()
+        for time_format in [None, '%H:%M']:
+            # do nothing
+            self.client.notify()
 
-        # notify message
-        self.client.notify(message='[unittest] test_notify')
+            # notify message
+            self.client.notify(message='[unittest] test_notify')
 
-        # notify imgs
-        self.client.notify(imgs=np.ones((64, 64), dtype=np.uint8))
+            # notify imgs
+            self.client.notify(imgs=np.ones((64, 64), dtype=np.uint8))
 
     def test_send_line_notify(self):
-        send_line_notify('[unittest] send_line_notify',
-                         np.ones((64, 64), dtype=np.uint8))
+        for time_format in [None, '%H:%M']:
+            send_line_notify(
+                '[unittest] send_line_notify',
+                np.ones((64, 64), dtype=np.uint8),
+                time_format=time_format)
