@@ -45,7 +45,7 @@ class LineNotify(object):
                                  files=files)
         return response
 
-    def notify(self, message=None, imgs=None):
+    def notify(self, message=None, imgs=None, time_format='%H:%M'):
         """Notify by using line notify api.
 
         Parameters
@@ -54,6 +54,10 @@ class LineNotify(object):
             text message.
         imgs : None, list[PIL.Image.Image], list[numpy.ndarray] or list[str]
             Images or paths of image file.
+        time_format : None or str
+            Time string format. default is '%H:%M'.
+            If this value is None, time stamp is not displayed.
+
 
         Returns
         -------
@@ -92,8 +96,9 @@ class LineNotify(object):
 
         responses = []
         if message is not None:
-            message = "{}\n{}".format(
-                datetime.datetime.now().strftime('%H:%M'), message)
+            if time_format is not None:
+                message = "{}\n{}".format(
+                    datetime.datetime.now().strftime(time_format), message)
             payload = {'message': message}
             res = self._notify(data=payload)
             responses.append(res)
@@ -109,15 +114,19 @@ class LineNotify(object):
                 files.append({"imageFile": buf})
 
             for f in files:
-                message = "{}".format(
-                    datetime.datetime.now().strftime('%H:%M'))
-                payload = {'message': message}
+                if time_format is not None:
+                    message = "{}".format(
+                        datetime.datetime.now().strftime(time_format))
+                    payload = {'message': message}
+                else:
+                    payload = {}
                 res = self._notify(files=f, data=payload)
                 responses.append(res)
         return responses
 
 
-def send_line_notify(message=None, imgs=None, token=None):
+def send_line_notify(message=None, imgs=None, token=None,
+                     time_format='%H:%M'):
     """Notify by using line notify api.
 
     Parameters
@@ -129,6 +138,9 @@ def send_line_notify(message=None, imgs=None, token=None):
     token : None or str or pathlib.PosixPath
         access token. If this value is None, get access token from
         environment variable LINENOTIFY_TOKEN.
+    time_format : None or str
+        Time string format. default is '%H:%M'.
+        If this value is None, time stamp is not displayed.
 
     Returns
     -------
@@ -136,4 +148,4 @@ def send_line_notify(message=None, imgs=None, token=None):
         list of responses.
     """
     ln = LineNotify(token=token)
-    return ln.notify(message, imgs)
+    return ln.notify(message, imgs, time_format=time_format)
