@@ -11,6 +11,7 @@ import requests
 
 from line_notify.image_utils import resize_keeping_aspect_ratio
 
+
 _cached_token = {}
 
 
